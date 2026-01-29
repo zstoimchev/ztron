@@ -21,6 +21,7 @@ public class MerkleTree {
 
     public Hash buildTree(Path path) throws IOException {
         List<Chunk> chunks = chunker.chunk(path);
+        if (chunks.isEmpty()) return hasher.hash(new byte[0]);
         List<Hash> leafHashes = hasher.hashLeaves(chunks);
         MerkleNode root = buildTreeFromHashes(leafHashes);
         return root.hash();
