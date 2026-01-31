@@ -1,5 +1,8 @@
-package dev.chunk;
+package dev.infrastructure.chunking;
 
+import dev.core.exceptions.ChunkingException;
+import dev.core.models.Chunk;
+import dev.core.services.ChunkingService;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
@@ -10,10 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-public class Chunker {
+public class StreamChunker implements ChunkingService {
     private final int chunkSize;
 
-    public List<Chunk> chunk(Path path) throws IOException {
+    @Override
+    public List<Chunk> chunk(Path path) throws ChunkingException {
+        if (path == null) throw new ChunkingException("Path cannot be null");
+
+        if (!Files.exists(path)) throw new ChunkingException("File does not exist: " + path);
+
+
         List<Chunk> chunks = new ArrayList<>();
         try (InputStream in = Files.newInputStream(path)) {
             long index = 0;
@@ -23,6 +32,8 @@ public class Chunker {
                 byte[] data = (read == chunkSize) ? buffer.clone() : copyOf(buffer, read);
                 chunks.add(new Chunk(index++, data));
             }
+        } catch (IOException e) {
+            throw new ChunkingException("Failed to chunk file: " + path, e);
         }
         return chunks;
     }

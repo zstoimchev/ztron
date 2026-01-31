@@ -1,4 +1,4 @@
-package dev.hash;
+package dev.core.models;
 
 import java.util.Arrays;
 
