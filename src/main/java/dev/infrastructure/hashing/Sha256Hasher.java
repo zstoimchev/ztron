@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SHA256Hasher implements HashingService {
+public class Sha256Hasher implements HashingService {
 
     @Override
     public Hash hash(byte[] data) throws HashingException {
