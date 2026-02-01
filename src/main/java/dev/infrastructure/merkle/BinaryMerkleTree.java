@@ -6,10 +6,12 @@ import dev.core.exceptions.MerkleTreeException;
 import dev.core.models.Chunk;
 import dev.core.models.Hash;
 import dev.core.models.MerkleNode;
+import dev.core.models.VerificationResult;
 import dev.core.services.ChunkingService;
 import dev.core.services.HashingService;
 import dev.core.services.MerkleTreeService;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,5 +77,39 @@ public class BinaryMerkleTree implements MerkleTreeService {
         }
 
         return nodes.getFirst();
+    }
+
+    @Override
+    public boolean verify(Path file, Hash expectedHash) throws MerkleTreeException, ChunkingException, HashingException {
+        if (file == null) throw new MerkleTreeException("File path cannot be null");
+        if (expectedHash == null) throw new MerkleTreeException("Expected hash cannot be null");
+        if (!Files.exists(file)) throw new MerkleTreeException("File does not exist: " + file);
+
+        Hash actualHash = buildTreeHash(file);
+        return actualHash.equals(expectedHash);
+    }
+
+    @Override
+    public VerificationResult verifyDetailed(Path file, Hash expectedHash) throws MerkleTreeException, ChunkingException, HashingException {
+        if (file == null) throw new MerkleTreeException("File path cannot be null");
+        if (expectedHash == null) throw new MerkleTreeException("Expected hash cannot be null");
+        if (!Files.exists(file)) throw new MerkleTreeException("File does not exist: " + file);
+
+        Hash actualHash = buildTreeHash(file);
+        if (actualHash.equals(expectedHash)) return VerificationResult.success(actualHash);
+        else return VerificationResult.failure(expectedHash, actualHash);
+    }
+
+    @Override
+    public boolean compare(Path file1, Path file2) throws MerkleTreeException, ChunkingException, HashingException {
+        if (file1 == null || file2 == null) {
+            throw new MerkleTreeException("File paths cannot be null");
+        }
+        if (!Files.exists(file1)) throw new MerkleTreeException("File does not exist: " + file1);
+        if (!Files.exists(file2)) throw new MerkleTreeException("File does not exist: " + file2);
+
+        Hash hash1 = buildTreeHash(file1);
+        Hash hash2 = buildTreeHash(file2);
+        return hash1.equals(hash2);
     }
 }
