@@ -1,5 +1,7 @@
 package dev.cli.commands;
 
+import dev.cli.Command;
+
 public class VerifyCommand implements Command {
     @Override
     public void execute(String[] args) throws Exception {
