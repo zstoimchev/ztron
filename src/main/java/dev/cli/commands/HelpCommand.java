@@ -15,7 +15,10 @@ public class HelpCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        if (args.length == 0) showGeneralHelp();
+        if (args.length == 0) {
+            showGeneralHelp();
+            return;
+        }
         showCommandHelp(args[0]);
     }
 
@@ -35,8 +38,6 @@ public class HelpCommand implements Command {
                   -h, --help       Show help
                   -v, --version    Show version
                 %n""", commandList);
-
-        System.exit(0);
     }
 
     private void showCommandHelp(String commandName) {
@@ -51,8 +52,6 @@ public class HelpCommand implements Command {
                 Description: %s
                 Usage: ztron %s
                 %n""", command.getName(), command.getDescription(), command.getUsage());
-
-        System.exit(0);
     }
 
     @Override

@@ -36,6 +36,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             new Main().run(args);
+            System.exit(0);
         } catch (Exception e) {
             System.err.println("zTron caught an unexpected error: " + e.getMessage());
             System.exit(1);
