@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class VersionCommandTest {
     private PrintStream originalOut;
     private ByteArrayOutputStream output;
+    private final String VERSION = "0.0.0";
 
     @BeforeEach
     void setUp() {
@@ -27,7 +28,7 @@ class VersionCommandTest {
 
     @Test
     void printsVersion() {
-        VersionCommand command = new VersionCommand();
+        VersionCommand command = new VersionCommand(VERSION);
         command.execute(new String[0]);
         String result = output.toString();
         assertTrue(result.contains("zTron"));
@@ -36,7 +37,7 @@ class VersionCommandTest {
 
     @Test
     void printsJavaVersion() {
-        VersionCommand command = new VersionCommand();
+        VersionCommand command = new VersionCommand(VERSION);
         command.execute(new String[0]);
         String result = output.toString();
         assertTrue(result.contains("Java"));

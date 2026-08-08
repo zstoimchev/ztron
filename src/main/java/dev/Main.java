@@ -22,7 +22,7 @@ public class Main {
         MerkleTreeService merkleTreeService = new BinaryMerkleTree(chunkingService, hashingService);
 
         Command buildCommand = new BuildCommand(merkleTreeService);
-        Command verifyCommand = new VerifyCommand();
+        Command verifyCommand = new VerifyCommand(merkleTreeService);
         Command compareCommand = new CompareCommand();
         Command versionCommand = new VersionCommand(VERSION);
 
