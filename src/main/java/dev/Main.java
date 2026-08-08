@@ -2,9 +2,7 @@ package dev;
 
 import dev.cli.Command;
 import dev.cli.MerkleTreeCli;
-import dev.cli.commands.BuildCommand;
-import dev.cli.commands.CompareCommand;
-import dev.cli.commands.VerifyCommand;
+import dev.cli.commands.*;
 import dev.core.services.ChunkingService;
 import dev.core.services.HashingService;
 import dev.core.services.MerkleTreeService;
@@ -25,8 +23,12 @@ public class Main {
         Command buildCommand = new BuildCommand(merkleTreeService);
         Command verifyCommand = new VerifyCommand();
         Command compareCommand = new CompareCommand();
+        Command versionCommand = new VersionCommand();
 
-        List<Command> commands = List.of(buildCommand, verifyCommand, compareCommand);
+        List<Command> applicationCommands = List.of(buildCommand, verifyCommand, compareCommand);
+        Command helpCommand = new HelpCommand(applicationCommands);
+
+        List<Command> commands = List.of(buildCommand, verifyCommand, compareCommand, helpCommand, versionCommand);
 
         cli = new MerkleTreeCli(commands);
     }

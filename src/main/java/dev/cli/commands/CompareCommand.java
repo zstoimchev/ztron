@@ -10,16 +10,16 @@ public class CompareCommand implements Command {
 
     @Override
     public String getName() {
-        return "";
+        return "compare";
     }
 
     @Override
     public String getUsage() {
-        return "";
+        return "compare <file1> <file2>";
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return "Compare two files and print their differences";
     }
 }

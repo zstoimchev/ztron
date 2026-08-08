@@ -10,16 +10,16 @@ public class VerifyCommand implements Command {
 
     @Override
     public String getName() {
-        return "";
+        return "verify";
     }
 
     @Override
     public String getUsage() {
-        return "";
+        return "verify <file> <hash>";
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return "Verify the integrity of a file against a given hash";
     }
 }
