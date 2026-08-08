@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Main {
     private final MerkleTreeCli cli;
+    private static final String VERSION = "v0.0.1";
 
     public Main() {
         ChunkingService chunkingService = new StreamChunker(1024 * 1024);
@@ -23,7 +24,7 @@ public class Main {
         Command buildCommand = new BuildCommand(merkleTreeService);
         Command verifyCommand = new VerifyCommand();
         Command compareCommand = new CompareCommand();
-        Command versionCommand = new VersionCommand();
+        Command versionCommand = new VersionCommand(VERSION);
 
         List<Command> applicationCommands = List.of(buildCommand, verifyCommand, compareCommand);
         Command helpCommand = new HelpCommand(applicationCommands);
