@@ -17,4 +17,9 @@ public record Hash(byte[] value) {
     public String toHex() {
         return HexFormat.of().formatHex(value);
     }
+
+    public static Hash fromHex(String hex) {
+        if (hex == null || hex.isBlank()) throw new IllegalArgumentException("Hex hash cannot be null or blank");
+        return new Hash(HexFormat.of().parseHex(hex));
+    }
 }

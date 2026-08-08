@@ -22,7 +22,6 @@ public class BuildCommand implements Command {
         if (args.length != 1) throw new IllegalArgumentException("Usage: " + getUsage());
 
         Path file = Path.of(args[0]);
-
         if (!Files.isRegularFile(file)) throw new IllegalArgumentException("File does not exist: " + file);
 
         Hash rootHash;
