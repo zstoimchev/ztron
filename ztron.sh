@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-java -jar /path/to/ztron.jar "$@"
+chmod +x ./scripts/run.sh
+
+exec "./scripts/run.sh" "$@"
