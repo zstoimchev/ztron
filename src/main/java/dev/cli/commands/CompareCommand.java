@@ -46,7 +46,7 @@ public class CompareCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "compare <file1> <file2>";
+        return "ztron compare <file1> <file2>";
     }
 
     @Override
