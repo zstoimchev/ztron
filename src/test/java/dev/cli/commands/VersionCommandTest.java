@@ -32,7 +32,7 @@ class VersionCommandTest {
         command.execute(new String[0]);
         String result = output.toString();
         assertTrue(result.contains("zTron"));
-        assertTrue(result.contains("0.0.1"));
+        assertTrue(result.contains("0.0.0"));
     }
 
     @Test

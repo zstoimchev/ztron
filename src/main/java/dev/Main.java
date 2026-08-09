@@ -10,13 +10,24 @@ import dev.infrastructure.chunking.StreamChunker;
 import dev.infrastructure.hashing.Sha256Hasher;
 import dev.infrastructure.merkle.BinaryMerkleTree;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class Main {
     private final MerkleTreeCli cli;
-    private static final String VERSION = "v0.0.1";
 
-    public Main() {
+    public Main() throws IOException {
+        Properties properties = new Properties();
+
+        String VERSION;
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("version.properties")) {
+            if (input == null) throw new IllegalStateException("Could not load version information");
+            properties.load(input);
+            VERSION = properties.getProperty("version", "unknown");
+        }
+
         ChunkingService chunkingService = new StreamChunker(1024 * 1024);
         HashingService hashingService = new Sha256Hasher();
         MerkleTreeService merkleTreeService = new BinaryMerkleTree(chunkingService, hashingService);
@@ -45,10 +56,7 @@ public class Main {
     }
 
     private void run(String[] args) throws Exception {
-        System.out.println("===========================================================n");
-        System.out.println("*  zTron - File integrity verification using Merkle trees  *");
-        System.out.println("============================================================");
-
+        System.out.println("zTron - File integrity verification using Merkle trees\n");
         cli.run(args);
     }
 }

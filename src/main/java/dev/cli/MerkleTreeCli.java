@@ -14,10 +14,7 @@ public class MerkleTreeCli {
     }
 
     public void run(String[] args) throws Exception {
-        String commandName;
-
-        if (args.length == 0) commandName = "help";
-        else commandName = args[0].toLowerCase();
+        String commandName = args.length == 0 ? "help" : args[0].toLowerCase();
 
         if ("-h".equals(commandName) || "--help".equals(commandName)) commandName = "help";
         if ("-v".equals(commandName) || "--version".equals(commandName)) commandName = "version";
@@ -25,7 +22,7 @@ public class MerkleTreeCli {
         Command command = commands.get(commandName);
         if (command == null) throw new IllegalArgumentException("Unknown command: " + commandName);
 
-        String[] commandArgs = Arrays.copyOfRange(args, 1, args.length);
+        String[] commandArgs = args.length > 0 ? Arrays.copyOfRange(args, 1, args.length) : new String[0];
         command.execute(commandArgs);
     }
 }

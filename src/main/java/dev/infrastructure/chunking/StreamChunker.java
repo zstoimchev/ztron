@@ -3,7 +3,6 @@ package dev.infrastructure.chunking;
 import dev.core.exceptions.ChunkingException;
 import dev.core.models.Chunk;
 import dev.core.services.ChunkingService;
-import lombok.AllArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,9 +11,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 public class StreamChunker implements ChunkingService {
     private final int chunkSize;
+
+    public StreamChunker(int chunkSize) {
+        if (chunkSize <= 0) throw new IllegalArgumentException("Chunk size must be greater than 0");
+        this.chunkSize = chunkSize;
+    }
 
     @Override
     public List<Chunk> chunk(Path path) throws ChunkingException {
