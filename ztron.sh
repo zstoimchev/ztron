@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-chmod +x ./scripts/run.sh
+[[ -x ./scripts/run.sh ]] || chmod +x ./scripts/run.sh
 
 exec "./scripts/run.sh" "$@"
