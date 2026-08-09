@@ -19,10 +19,10 @@ public class Main {
     private final MerkleTreeCli cli;
 
     public Main() throws IOException {
-        Properties properties = new Properties();
-
         String VERSION;
+
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("version.properties")) {
+            Properties properties = new Properties();
             if (input == null) throw new IllegalStateException("Could not load version information");
             properties.load(input);
             VERSION = properties.getProperty("version", "unknown");
@@ -30,19 +30,9 @@ public class Main {
 
         ChunkingService chunkingService = new StreamChunker(1024 * 1024);
         HashingService hashingService = new Sha256Hasher();
+
         MerkleTreeService merkleTreeService = new BinaryMerkleTree(chunkingService, hashingService);
-
-        Command buildCommand = new BuildCommand(merkleTreeService);
-        Command verifyCommand = new VerifyCommand(merkleTreeService);
-        Command compareCommand = new CompareCommand(merkleTreeService);
-        Command versionCommand = new VersionCommand(VERSION);
-
-        List<Command> applicationCommands = List.of(buildCommand, verifyCommand, compareCommand);
-        Command helpCommand = new HelpCommand(applicationCommands);
-
-        List<Command> commands = List.of(buildCommand, verifyCommand, compareCommand, helpCommand, versionCommand);
-
-        cli = new MerkleTreeCli(commands);
+        cli = new MerkleTreeCli(getCommands(merkleTreeService, VERSION));
     }
 
     public static void main(String[] args) {
@@ -58,5 +48,17 @@ public class Main {
     private void run(String[] args) throws Exception {
 //        System.out.println("zTron - File integrity verification using Merkle trees\n");
         cli.run(args);
+    }
+
+    private static List<Command> getCommands(MerkleTreeService merkleTreeService, String VERSION) {
+        Command buildCommand = new BuildCommand(merkleTreeService);
+        Command verifyCommand = new VerifyCommand(merkleTreeService);
+        Command compareCommand = new CompareCommand(merkleTreeService);
+        Command versionCommand = new VersionCommand(VERSION);
+
+        List<Command> applicationCommands = List.of(buildCommand, verifyCommand, compareCommand, versionCommand);
+        Command helpCommand = new HelpCommand(applicationCommands);
+
+        return List.of(buildCommand, verifyCommand, compareCommand, versionCommand, helpCommand);
     }
 }
