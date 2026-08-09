@@ -159,4 +159,9 @@ class BinaryMerkleTreeTest {
 
         assertNotNull(root, "Root hash should exist for large file");
     }
+
+    @Test
+    void constructorShouldRejectZeroChunkSize() {
+        assertThrows(IllegalArgumentException.class, () -> new StreamChunker(0));
+    }
 }
