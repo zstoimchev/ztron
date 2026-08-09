@@ -45,7 +45,7 @@ class HelpCommandTest {
 
     @Test
     void printsHelpForSpecificCommand() {
-        Command build = new TestCommand("build", "build <file>", "Build a Merkle tree");
+        Command build = new TestCommand("build", "ztron build <file>", "Build a Merkle tree");
         HelpCommand help = new HelpCommand(List.of(build));
 
         help.execute(new String[]{"build"});
