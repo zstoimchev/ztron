@@ -1,6 +1,7 @@
 package dev.core.models;
 
 import java.util.Arrays;
+import java.util.HexFormat;
 
 public record Hash(byte[] value) {
     @Override
@@ -11,5 +12,14 @@ public record Hash(byte[] value) {
     @Override
     public int hashCode() {
         return Arrays.hashCode(value);
+    }
+
+    public String toHex() {
+        return HexFormat.of().formatHex(value);
+    }
+
+    public static Hash fromHex(String hex) {
+        if (hex == null || hex.isBlank()) throw new IllegalArgumentException("Hex hash cannot be null or blank");
+        return new Hash(HexFormat.of().parseHex(hex));
     }
 }
