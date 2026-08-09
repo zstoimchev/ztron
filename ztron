@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+[[ -x ./scripts/install.sh ]] || chmod +x ./scripts/install.sh
+[[ -x ./scripts/package.sh ]] || chmod +x ./scripts/package.sh
+[[ -x ./scripts/run.sh ]] || chmod +x ./scripts/run.sh
+
+case "${1:-}" in
+    install)
+        shift
+        exec "./scripts/install.sh" "$@"
+        ;;
+
+    package)
+        shift
+        exec "./scripts/package.sh" "$@"
+        ;;
+
+    *)
+        exec "./scripts/run.sh" "$@"
+        ;;
+esac
