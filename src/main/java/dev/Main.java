@@ -56,10 +56,7 @@ public class Main {
     }
 
     private void run(String[] args) throws Exception {
-        System.out.println("============================================================");
-        System.out.println("*  zTron - File integrity verification using Merkle trees  *");
-        System.out.println("============================================================");
-
+        System.out.println("zTron - File integrity verification using Merkle trees\n");
         cli.run(args);
     }
 }

@@ -14,4 +14,4 @@ if [[ ! -f "$JAR" ]]; then
     exit 1
 fi
 
-echo "Using $JAR"
+exec java -jar "$JAR" "$@"
