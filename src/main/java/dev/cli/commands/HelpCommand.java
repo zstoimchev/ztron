@@ -50,7 +50,7 @@ public class HelpCommand implements Command {
         System.out.printf("""
                 Command: %s
                 Description: %s
-                Usage: ztron %s
+                Usage: %s
                 %n""", command.getName(), command.getDescription(), command.getUsage());
     }
 
@@ -61,7 +61,7 @@ public class HelpCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "help [command]";
+        return "ztron help [command]";
     }
 
     @Override

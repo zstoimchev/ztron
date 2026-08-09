@@ -22,7 +22,7 @@ public class VersionCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "version";
+        return "ztron version";
     }
 
     @Override
