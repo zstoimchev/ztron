@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-[[ -x ./scripts/install.sh ]] || chmod +x ./scripts/install.sh
-[[ -x ./scripts/package.sh ]] || chmod +x ./scripts/package.sh
-[[ -x ./scripts/run.sh ]] || chmod +x ./scripts/run.sh
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR" || exit
+
+for script in ./scripts/install.sh ./scripts/package.sh ./scripts/run.sh; do
+    [[ -f "$script" ]] || { echo "Missing required script: $script" >&2; exit 1; }
+    [[ -x "$script" ]] || chmod +x "$script"
+done
 
 case "${1:-}" in
     install)

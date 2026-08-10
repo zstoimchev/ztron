@@ -40,7 +40,7 @@ class VersionCommandTest {
         VersionCommand command = new VersionCommand(VERSION);
         command.execute(new String[0]);
         String result = output.toString();
-        assertTrue(result.contains("Java"));
-        assertTrue(result.contains(System.getProperty("java.version")));
+        assertTrue(result.contains("zTron"));
+        assertTrue(result.contains(VERSION));
     }
 }

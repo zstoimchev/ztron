@@ -19,7 +19,7 @@ public class CompareCommand implements Command {
 
     @Override
     public void execute(String[] args) throws Exception {
-        if (args.length != 2) throw new IllegalArgumentException("Usage: ztron " + getUsage());
+        if (args.length != 2) throw new IllegalArgumentException("Usage: " + getUsage());
 
         Path firstFile = Path.of(args[0]);
         Path secondFile = Path.of(args[1]);
