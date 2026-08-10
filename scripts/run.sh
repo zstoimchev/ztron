@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 if ! command -v java >/dev/null 2>&1; then
     echo "Java is not installed. Run ./scripts/install.sh (or install Java 21+)"

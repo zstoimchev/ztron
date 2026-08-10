@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 echo "Checking dependencies..."
 if ! command -v java >/dev/null 2>&1; then
