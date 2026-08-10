@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Read project version
+        id: version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Verify tag matches project version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PROJECT_VERSION="${{ steps.version.outputs.version }}"
+
+          if [[ "$TAG_VERSION" != "$PROJECT_VERSION" ]]; then
+            echo "Tag version:     $TAG_VERSION"
+            echo "Project version: $PROJECT_VERSION"
+            echo "Tag and pom.xml version do not match."
+            exit 1
+          fi
+
+      - name: Build release
+        run: mvn -B clean package
+
+      - name: Smoke test
+        run: java -jar target/ztron-${{ steps.version.outputs.version }}.jar version
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "target/ztron-${{ steps.version.outputs.version }}.jar" \
+            --verify-tag \
+            --generate-notes
