@@ -31,5 +31,5 @@ jobs:
       - name: Package
         run: mvn -B -DskipTests package --file pom.xml
 
-      - name: Run zTron (smoke-test)
-        run: chmod +x ztron scripts/*.sh ./ztron version
+      - name: Run zTron
+        run: ./ztron version
