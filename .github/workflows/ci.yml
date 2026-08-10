@@ -1,0 +1,35 @@
+name: Java CI with Maven
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile
+        run: mvn -B -DskipTests compile
+
+      - name: Test
+        run: mvn -B test
+
+      - name: Package
+        run: mvn -B -DskipTests package --file pom.xml
+
+      - name: Run zTron
+        run: ./ztron version

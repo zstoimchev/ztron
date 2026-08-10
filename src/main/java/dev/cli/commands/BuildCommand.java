@@ -41,7 +41,7 @@ public class BuildCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "build <file>";
+        return "ztron build <file>";
     }
 
     @Override

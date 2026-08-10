@@ -12,7 +12,6 @@ public class VersionCommand implements Command {
     @Override
     public void execute(String[] args) {
         System.out.println("zTron " + version);
-        System.out.println("Java " + System.getProperty("java.version"));
     }
 
     @Override
@@ -22,7 +21,7 @@ public class VersionCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "version";
+        return "ztron version";
     }
 
     @Override

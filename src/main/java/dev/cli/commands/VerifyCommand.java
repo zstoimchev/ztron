@@ -43,7 +43,7 @@ public class VerifyCommand implements Command {
 
     @Override
     public String getUsage() {
-        return "verify <file> <hash>";
+        return "ztron verify <file> <hash>";
     }
 
     @Override
